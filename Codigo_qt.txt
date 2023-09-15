@@ -7,6 +7,7 @@ void imprimir(int **matriz);
 void apagar(int **matriz);
 void prender(int **matriz);
 verificacion(int **matriz, int tiempo, int repeticiones);
+void imagen(int **matriz, int tiempo);
 
 
 
@@ -34,6 +35,8 @@ int main()
         if(opcion==2){
             cout<<"Ingrese el tiempo de espera: "; cin>>tiempo;
             cout<<endl;
+
+	    imagen(matriz, tiempo);
 
         }
 
@@ -90,4 +93,31 @@ void prender(int **matriz){
     }
 }
 
-verificacion(int **matriz, int tiempo, int repeticiones);
+void verificacion(int **matriz, int tiempo, int repeticiones){
+
+    for(int i=1; i<=repeticiones; i++){
+
+        cout<<"Repeticion "<<i<<endl;
+        prender(matriz);
+        imprimir(matriz);
+        cout<<"Espera cierto tiempo wait()"<<tiempo<<endl;
+        apagar(matriz);
+        imprimir(matriz);
+        cout<<endl;
+
+        cout<<endl;
+    }
+}
+
+void imagen(int **matriz, int tiempo){
+
+    for(int i=0; i<8; i++){                                              //Llena la funcion.
+        for(int j=0; j<8; j++){
+            cout<<"Ingrese la posicion "<<"["<<i<<"]"<<"["<<j<<"]"<<" "; cin>>matriz[i][j];
+        }
+    }
+
+    prender(matriz);
+    cout<<"Esperar tiempo"<<tiempo<<endl;
+    apagar(matriz);
+}
