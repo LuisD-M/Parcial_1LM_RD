@@ -6,6 +6,9 @@ int Public();
 void imprimir(int **matriz);
 void apagar(int **matriz);
 void prender(int **matriz);
+verificacion(int **matriz, int tiempo, int repeticiones);
+
+
 
 int main()
 {
@@ -21,6 +24,9 @@ int main()
         if(opcion==1){
             cout<<"Ingrese el tiempo de encendido - apagado: "; cin>>tiempo;
             cout<<"Ingrese el numero de repeticiones que quiere: "; cin>>repeticiones;
+
+            verificacion(matriz, tiempo, repeticiones);
+            
             cout<<endl;
 
         }
@@ -83,3 +89,5 @@ void prender(int **matriz){
         for(int j=0; j<8; j++) matriz[i][j] = 1;     //Llena la matriz con ceros
     }
 }
+
+verificacion(int **matriz, int tiempo, int repeticiones);
