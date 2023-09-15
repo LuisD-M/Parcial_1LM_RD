@@ -1,2 +1,3 @@
-Raul Daza Liñan 
-Luis David Muñoz 
+Autores:
+* Raul Daza Liñan 
+* Luis David Muñoz 
