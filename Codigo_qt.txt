@@ -1,0 +1,155 @@
+#include <iostream>
+
+using namespace std;
+
+int Public();
+void imprimir(int **matriz);
+void apagar(int **matriz);
+void prender(int **matriz);
+verificacion(int **matriz, int tiempo, int repeticiones);
+void imagen(int **matriz, int tiempo);
+void patron1(int **matriz);
+void patron2(int **matriz);
+
+
+int main()
+{
+    int opcion=1, tiempo=0, repeticiones=0;
+
+    int **matriz = new int*[8];                       //Se reserva la matriz de 8X8 en memoria dinamica;
+    for(int i=0; i<8; i++) matriz[i] = new int[8];
+
+
+    while(opcion!=0){
+        opcion = Public();
+
+        if(opcion==1){
+            cout<<"Ingrese el tiempo de encendido - apagado: "; cin>>tiempo;
+            cout<<"Ingrese el numero de repeticiones que quiere: "; cin>>repeticiones;
+
+            verificacion(matriz, tiempo, repeticiones);
+            
+            cout<<endl;
+
+        }
+
+        if(opcion==2){
+            cout<<"Ingrese el tiempo de espera: "; cin>>tiempo;
+            cout<<endl;
+
+	    imagen(matriz, tiempo);
+
+        }
+
+        if(opcion==3){
+            cout<<"Opcion 3"<<endl;
+
+        }
+
+        cout<<endl;
+
+    }
+    cout<<"El menu finalizo"<<endl;
+
+    for (int i=0; i<8; i++) delete[] matriz[i];                         //Libera la memoria de las filas.
+    delete[] matriz;                                                    //Libera la memoria del puntero.
+}
+
+
+int Public(){
+    int opcion=10;
+    char opcion1;
+
+    cout<<"--------- Menu de opciones ----------"<<endl;
+    cout<<"1. Verificar el funcionamiento de los leds."<<endl;
+    cout<<"2. Imagen de prueba ingresada por el usuario."<<endl;
+    cout<<"3. Mostrar los patrones de prueba 1-4."<<endl;
+    cout<<"0. Para finalizar."<<endl;
+    cout<<endl;
+
+    while((opcion<0) || (opcion>3)){
+        cout<<"Ingrese la opcion que desea: "; cin>>opcion1;
+        opcion = (int)opcion1 - 48;
+    }
+    return opcion;
+}
+
+void imprimir(int **matriz){
+    for(int i=0; i<8; i++){
+        for(int j=0; j<8; j++) cout<<matriz[i][j]<<" ";
+
+        cout<<endl;
+    }
+}
+
+void apagar(int **matriz){
+    for(int i=0; i<8; i++){
+        for(int j=0; j<8; j++) matriz[i][j] = 0;     //Llena la matriz con ceros
+    }
+}
+
+void prender(int **matriz){
+    for(int i=0; i<8; i++){
+        for(int j=0; j<8; j++) matriz[i][j] = 1;     //Llena la matriz con ceros
+    }
+}
+
+void verificacion(int **matriz, int tiempo, int repeticiones){
+
+    for(int i=1; i<=repeticiones; i++){
+
+        cout<<"Repeticion "<<i<<endl;
+        prender(matriz);
+        imprimir(matriz);
+        cout<<"Espera cierto tiempo wait()"<<tiempo<<endl;
+        apagar(matriz);
+        imprimir(matriz);
+        cout<<endl;
+
+        cout<<endl;
+    }
+}
+
+void imagen(int **matriz, int tiempo){
+
+    for(int i=0; i<8; i++){                                              //Llena la funcion.
+        for(int j=0; j<8; j++){
+            cout<<"Ingrese la posicion "<<"["<<i<<"]"<<"["<<j<<"]"<<" "; cin>>matriz[i][j];
+        }
+    }
+
+    prender(matriz);
+    cout<<"Esperar tiempo"<<tiempo<<endl;
+    apagar(matriz);
+}
+
+void patron1(int **matriz){
+    int aux=8;
+
+    for(int j=0; j<4; j++){
+
+        for(int i=0; i<3-j; i++) matriz[i][j]=0;
+        for(int i=3-j; i<2+2*j+(3-j); i++) matriz[i][j]=1;
+        for(int i=2+2*j+(3-j); i<8; i++) matriz[i][j]=0;
+    }
+
+    for(int j=4; j<8; j++){
+
+        for(int i=0; i<j-4; i++) matriz[i][j]=0;
+        for(int i=j-4; i<aux; i++) matriz[i][j]=1;
+        for(int i=aux; i<8; i++) matriz[i][j]=0;
+        aux--;
+    }
+}
+
+void patron2(int **matriz){
+    for(int i=0; i<8; i++){
+        for(int j=0; j<8; j++ ){
+            if(i==j) matriz[i][j] =1;
+            else
+                matriz[i][j]=0;
+        }
+    }
+
+    for(int i=0; i<8; i++) matriz[i][7-i]=1;
+}
