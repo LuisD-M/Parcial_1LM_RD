@@ -10,7 +10,9 @@ verificacion(int **matriz, int tiempo, int repeticiones);
 void imagen(int **matriz, int tiempo);
 void patron1(int **matriz);
 void patron2(int **matriz);
-
+void patron3(int **matriz);
+void patron4(int **matriz);
+void  patrones(int **matriz);
 
 int main()
 {
@@ -153,3 +155,78 @@ void patron2(int **matriz){
 
     for(int i=0; i<8; i++) matriz[i][7-i]=1;
 }
+
+void patron4(int **matriz){
+
+    for(int i=0; i<4; i++){                                          //Primeras 4 filas.
+        for(int j=0; j<i; j++) matriz[i][j]=0;
+        for(int j=i; j<5+i; j++) matriz[i][j]=1;
+        for(int j=i+4; j<8; j++) matriz[i][j]=0;
+    }
+
+    for(int i=4; i<8; i++){                                          //Primeras 4 filas.
+        for(int j=0; j<7-i; j++) matriz[i][j]=0;
+        for(int j=7-i; j<7-i+5; j++) matriz[i][j]=1;
+        for(int j=7-i+4; j<8; j++) matriz[i][j]=0;
+    }
+}
+
+void patron3(int **matriz){
+    int contador=0, b=0;
+
+    for(int l=0; l<2;l++){
+
+        for(int i=0+b; i<2+b; i++){
+            contador=0;
+            for(int j=0; j<8; j++){
+                matriz[i][j]=1;
+
+                if(contador==2){
+                    matriz[i][j]=0;
+                    contador=0;}
+                else
+                    contador++;
+            }
+        }
+
+        for(int i=2+b; i<4+b; i++){
+            contador=2;
+            for(int j=0; j<8; j++){
+                matriz[i][j]=1;
+
+                if(contador==2){
+                    matriz[i][j]=0;
+                    contador=0;}
+                else
+                    contador++;
+            }
+        }
+        b +=4;
+    }
+}
+
+void  patrones(int **matriz){
+    int tiempo;
+    cout<<"Ingrese el tiempo de retardo: "; cin>>tiempo;
+
+    patron1(matriz);
+    imprimir(matriz);
+
+    cout<<"Tiempo de espera en arduino: "<<tiempo<<endl;
+
+    patron2(matriz);
+    imprimir(matriz);
+
+    cout<<"Tiempo de espera en arduino: "<<tiempo<<endl;
+
+    patron3(matriz);
+    imprimir(matriz);
+
+    cout<<"Tiempo de espera en arduino: "<<tiempo<<endl;
+
+    patron4(matriz);
+    imprimir(matriz);
+}
+
+
+
