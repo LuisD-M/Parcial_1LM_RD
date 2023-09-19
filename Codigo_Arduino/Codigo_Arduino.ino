@@ -59,8 +59,15 @@ void loop() {
       }
       case 3:
       {
+        do{
+        Serial.println("Ingrese el tiempo de espera: ");
+        while(Serial.available() == 0){}
+        tiempo = Serial.parseInt();
+        Serial.println();
+        }while(tiempo < 1);
+
         Serial.println(" Patrones ");
-        patrones(matriz);
+        patrones(matriz, tiempo);
         break;
       }
       default:
@@ -216,26 +223,27 @@ void patron4(int **matriz){
   }
 }
 
-void  patrones(int **matriz){
-  int tiempo;
+void  patrones(int **matriz, int tiempo){
+  int sumRow;
+  int sumColumn;
 
   patron1(matriz);
   //imprimir(matriz);  funcion para mostrar la imagen en los leds
-
-  delay(tiempo);
+  vector2sum(matriz, tiempo);
 
   patron2(matriz);
+  vector2sum(matriz, tiempo);
   //imprimir(matriz);   funcion para mostrar la matriz en los leds
-
-  delay(tiempo);
 
   patron3(matriz);
+  vector2sum(matriz, tiempo);
   //imprimir(matriz);   funcion para mostrar la matriz en los leds
 
-  delay(tiempo);
 
   patron4(matriz);
+  vector2sum(matriz, tiempo);
   //imprimir(matriz);  funcion para mostrar la matriz en los leds
+  H595(0, 0);
 }
 
 void vectorsum(int **matriz, int vector[8]){
@@ -249,6 +257,22 @@ void vectorsum(int **matriz, int vector[8]){
         vector[i]=suma;
         suma=0;
     }
+}
+
+void vector2sum(int **matriz, long tiempo){
+  byte sumRow=0;
+  byte potencias[8]={1,2,4,8,16,32,64,128};
+  for (int t = 0; t < tiempo; t++){
+    for(int j=0; j<8; j++){
+        for(int i=0; i<8; i++){
+            sumRow += matriz[i][j]*potencias[i];
+        }
+        H595(0,0);
+        H595(potencias[j],~sumRow);
+        delayMicroseconds(125);
+        sumRow = 0;
+    }
+  }
 }
 
 void H595(int cat, int an ){
