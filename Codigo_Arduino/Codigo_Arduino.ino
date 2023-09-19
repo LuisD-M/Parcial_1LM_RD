@@ -23,18 +23,23 @@ void loop() {
     {
       case 0:
       {
-        Serial.println("El menu finalizo");
+        Serial.println("El programa finalizo");
         break;
       }
       case 1:
       {
-        Serial.println("Ingrese el tiempo de encendido apagado (ms): ");
+        do
+        {Serial.println("Ingrese el tiempo de encendido apagado (ms): ");
         while(Serial.available() == 0){}
         tiempo = Serial.parseInt();
+        }while(tiempo < 1);
           
+        do
+        {
         Serial.println("Ingrese el numero de repeticiones que quiere: ");
         while(Serial.available() == 0){}
         repeticiones = Serial.parseInt();
+        }while(repeticiones < 1);
         
         verificacion(matriz, tiempo, repeticiones);
         Serial.println();
@@ -42,10 +47,12 @@ void loop() {
       }
       case 2:
       {
+        do{
         Serial.println("Ingrese el tiempo de espera: ");
         while(Serial.available() == 0){}
         tiempo = Serial.parseInt();
         Serial.println();
+        }while(tiempo < 1);
 
         imagen(matriz, tiempo);
         break;
@@ -90,19 +97,22 @@ void apagar(int **matriz){
     for(int i=0; i<8; i++){
         for(int j=0; j<8; j++) matriz[i][j] = 0;     //Llena la matriz con ceros
     }
+    H595(0,0);
 }
 
 void prender(int **matriz){
     for(int i=0; i<8; i++){
         for(int j=0; j<8; j++) matriz[i][j] = 1;     //Llena la matriz con ceros
     }
+    H595(255,0);
 }
 
 void verificacion(int **matriz, int tiempo, int repeticiones){
-  for(int i=1; i<=repeticiones; i++){
+  for(int i=0; i<repeticiones; i++){
       prender(matriz);
       delay(tiempo);
       apagar(matriz);
+      delay(tiempo);
   }
 }
 
@@ -242,8 +252,8 @@ void vectorsum(int **matriz, int vector[8]){
 }
 
 void H595(int cat, int an ){
-   shiftOut(pinData, pinClock, LSBFIRST, an);
    shiftOut(pinData, pinClock, LSBFIRST, cat);
+   shiftOut(pinData, pinClock, LSBFIRST, an);
    digitalWrite(pinLatch, HIGH);
    digitalWrite(pinLatch, LOW);
 }
