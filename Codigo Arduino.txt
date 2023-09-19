@@ -58,7 +58,6 @@ void verificacion(int **matriz, int tiempo, int repeticiones){
 void imagen(int **matriz, int tiempo){
   for(int i=0; i<8; i++){                                              //Llena la funcion.
       for(int j=0; j<8; j++){
-          cout<<"Ingrese la posicion "<<"["<<i<<"]"<<"["<<j<<"]"<<" "; cin>>matriz[i][j];
           Serial.print("Ingrese la posicion");
           Serial.print("[");
           Serial.print(i);
@@ -71,7 +70,7 @@ void imagen(int **matriz, int tiempo){
       }
   }
   prender(matriz);
-  delay(tiempo)
+  delay(tiempo);
   apagar(matriz);
 }
 
@@ -156,32 +155,44 @@ void patron4(int **matriz){
 
 void  patrones(int **matriz){
   int tiempo;
-  cout<<"Ingrese el tiempo de retardo: "; cin>>tiempo;
 
   patron1(matriz);
   //imprimir(matriz);  funcion para mostrar la imagen en los leds
 
-  delay(tiempo)
+  delay(tiempo);
 
   patron2(matriz);
   //imprimir(matriz);   funcion para mostrar la matriz en los leds
 
-  delay(tiempo)
+  delay(tiempo);
 
   patron3(matriz);
   //imprimir(matriz);   funcion para mostrar la matriz en los leds
 
-  delay(tiempo)
+  delay(tiempo);
 
   patron4(matriz);
   //imprimir(matriz);  funcion para mostrar la matriz en los leds
 }
 
+void vectorsum(int **matriz, int vector[8]){
+    int suma=0;
+    int row[8]={1,2,4,8,16,32,64,128};
+
+    for(int i=0; i<8; i++){
+        for(int j=0; j<8; j++)
+            suma += row[j]*matriz[i][j];
+
+        vector[i]=suma;
+        suma=0;
+    }
+}
 
 
 
 void loop() {
   int opcion=1, tiempo=0, repeticiones=0;
+  int vector[8]={0,0,0,0,0,0,0,0};
 
   int **matriz = new int*[8];                       
   for(int i=0; i<8; i++) matriz[i] = new int[8];
@@ -204,7 +215,6 @@ void loop() {
       }
 
       if(opcion==2){
-          cout<<"Ingrese el tiempo de espera: "; cin>>tiempo;
           Serial.println("Ingrese el tiempo de espera: ");
           while(Serial.available() == 0){}
           tiempo = Serial.parseInt();
