@@ -259,25 +259,24 @@ void vectorsum(int **matriz, int vector[8]){
     }
 }
 
-void vector2sum(int **matriz, long tiempo){
+void vector2sum(int **matriz, int tiempo){
   byte sumRow=0;
   byte potencias[8]={1,2,4,8,16,32,64,128};
-  for (int t = 0; t < tiempo; t++){
-    for(int j=0; j<8; j++){
-        for(int i=0; i<8; i++){
-            sumRow += matriz[i][j]*potencias[i];
-        }
-        H595(0,0);
-        H595(potencias[j],~sumRow);
-        delayMicroseconds(125);
-        sumRow = 0;
-    }
+  for (int t = 0; t < tiempo*10; t++){
+      for(int i=0; i<8; i++){
+          for(int j=0; j<8; j++){
+              sumRow += matriz[i][j]*potencias[j];
+          }
+          H595((byte)potencias[i],(byte)~sumRow);
+          delayMicroseconds(125);
+          sumRow = 0;
+      }
   }
 }
 
-void H595(int cat, int an ){
-   shiftOut(pinData, pinClock, LSBFIRST, cat);
-   shiftOut(pinData, pinClock, LSBFIRST, an);
+void H595(byte an, byte cat ){
+   shiftOut(pinData, pinClock, MSBFIRST, (byte)an);
+   shiftOut(pinData, pinClock, MSBFIRST, (byte)cat);  
    digitalWrite(pinLatch, HIGH);
    digitalWrite(pinLatch, LOW);
 }
