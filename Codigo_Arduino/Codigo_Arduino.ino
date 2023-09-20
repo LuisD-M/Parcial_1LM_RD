@@ -24,7 +24,8 @@ void loop() {
       case 1:
       {
         do
-        {Serial.println("Ingrese el tiempo de encendido apagado (ms): ");
+        {
+        Serial.println("Ingrese el tiempo de encendido apagado (ms): ");
         while(Serial.available() == 0){}
         tiempo = Serial.parseInt();
         }while(tiempo < 1);
@@ -43,7 +44,7 @@ void loop() {
       case 2:
       {
         do{
-        Serial.println("Ingrese el tiempo de espera: ");
+        Serial.println("Ingrese el tiempo de espera (ms): ");
         while(Serial.available() == 0){}
         tiempo = Serial.parseInt();
         Serial.println();
@@ -55,7 +56,7 @@ void loop() {
       case 3:
       {
         do{
-        Serial.println("Ingrese el tiempo de espera: ");
+        Serial.println("Ingrese el tiempo de espera (ms): ");
         while(Serial.available() == 0){}
         tiempo = Serial.parseInt();
         Serial.println();
@@ -80,7 +81,7 @@ void loop() {
   
   for (int i=0; i<8; i++) delete[] matriz[i];     
   delete[] matriz;
-  while(opcion == 0){}
+  while(opcion == 4){}
 }
 
 int Public(){
@@ -124,7 +125,7 @@ void verificacion(int **matriz, long tiempo, int repeticiones){
 }
 
 void imagen(int **matriz, long tiempo){
-  for(int i=0; i<8; i++){                                              //Llena la funcion.
+  for(int i=0; i<8; i++){                                           //Llena la funcion.
       for(int j=0; j<8; j++){
           do{
           Serial.print("Ingrese la posicion");
@@ -133,15 +134,14 @@ void imagen(int **matriz, long tiempo){
           Serial.print("]");
           Serial.print("[");
           Serial.print(j);
-          Serial.print("] : ");
+          Serial.println("] : ");
           while(Serial.available() == 0){}
           matriz[i][j] = Serial.parseInt();  
-          }while(matriz[i][j] != 0 || matriz[i][j] != 1);
+          }while(matriz[i][j] != 0 && matriz[i][j] != 1);
       }
   }
-  prender(matriz);
-  delay(tiempo);
-  apagar(matriz);
+  vector2sum(matriz, tiempo);
+  H595(0,0);
 }
 
 void patron1(int **matriz){
@@ -242,7 +242,7 @@ void  patrones(int **matriz, long tiempo){
 }
 
 
-void vector2sum(int **matriz, int tiempo){
+void vector2sum(int **matriz, long tiempo){
   byte sumRow=0;
   byte potencias[8]={1,2,4,8,16,32,64,128};
   for (int t = 0; t < tiempo*10; t++){
