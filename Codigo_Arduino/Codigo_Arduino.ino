@@ -10,21 +10,17 @@ void setup(){
 }
 
 void loop() {
-  int opcion=1, tiempo=0, repeticiones=0;
+  int opcion=1, repeticiones=0;
+  long tiempo=0;
 
   int **matriz = new int*[8];                       
   for(int i=0; i<8; i++) matriz[i] = new int[8];
 
-  while(opcion!=0){
+  while(opcion!=4){
   
     opcion = Public();
     switch (opcion)
     {
-      case 0:
-      {
-        Serial.println("El programa finalizo");
-        break;
-      }
       case 1:
       {
         do
@@ -69,6 +65,11 @@ void loop() {
         patrones(matriz, tiempo);
         break;
       }
+      case 4:
+      {
+        Serial.println("El programa finalizo");
+        break;
+      }
       default:
       {
         Serial.println("Invalido");
@@ -88,10 +89,10 @@ int Public(){
   Serial.println(" 1. Verificar el funcionamiento de los leds. ");
   Serial.println(" 2. Imagen de prueba ingresada por el usuario. ");
   Serial.println(" 3. Mostrar los patrones de prueba 1-4. ");
-  Serial.println(" 0. Para finalizar. ");
+  Serial.println(" 4. Para finalizar. ");
   Serial.println();
 
-  while((opcion<0) || (opcion>3)){
+  while((opcion<1) || (opcion>4)){
     Serial.println("Ingrese la opcion que desea: ");
     while(Serial.available() == 0){}
     opcion = Serial.parseInt();
@@ -113,7 +114,7 @@ void prender(int **matriz){
     H595(255,0);
 }
 
-void verificacion(int **matriz, int tiempo, int repeticiones){
+void verificacion(int **matriz, long tiempo, int repeticiones){
   for(int i=0; i<repeticiones; i++){
       prender(matriz);
       delay(tiempo);
@@ -122,7 +123,7 @@ void verificacion(int **matriz, int tiempo, int repeticiones){
   }
 }
 
-void imagen(int **matriz, int tiempo){
+void imagen(int **matriz, long tiempo){
   for(int i=0; i<8; i++){                                              //Llena la funcion.
       for(int j=0; j<8; j++){
           do{
