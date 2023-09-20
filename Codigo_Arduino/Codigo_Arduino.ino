@@ -11,7 +11,6 @@ void setup(){
 
 void loop() {
   int opcion=1, tiempo=0, repeticiones=0;
-  int vector[8]={0,0,0,0,0,0,0,0};
 
   int **matriz = new int*[8];                       
   for(int i=0; i<8; i++) matriz[i] = new int[8];
@@ -223,41 +222,24 @@ void patron4(int **matriz){
   }
 }
 
-void  patrones(int **matriz, int tiempo){
-  int sumRow;
-  int sumColumn;
+void  patrones(int **matriz, long tiempo){
 
   patron1(matriz);
-  //imprimir(matriz);  funcion para mostrar la imagen en los leds
   vector2sum(matriz, tiempo);
 
   patron2(matriz);
   vector2sum(matriz, tiempo);
-  //imprimir(matriz);   funcion para mostrar la matriz en los leds
 
   patron3(matriz);
   vector2sum(matriz, tiempo);
-  //imprimir(matriz);   funcion para mostrar la matriz en los leds
 
 
   patron4(matriz);
   vector2sum(matriz, tiempo);
-  //imprimir(matriz);  funcion para mostrar la matriz en los leds
+
   H595(0, 0);
 }
 
-void vectorsum(int **matriz, int vector[8]){
-    int suma=0;
-    int row[8]={1,2,4,8,16,32,64,128};
-
-    for(int i=0; i<8; i++){
-        for(int j=0; j<8; j++)
-            suma += row[j]*matriz[i][j];
-
-        vector[i]=suma;
-        suma=0;
-    }
-}
 
 void vector2sum(int **matriz, int tiempo){
   byte sumRow=0;
