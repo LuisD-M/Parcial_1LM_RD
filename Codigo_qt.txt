@@ -228,5 +228,5 @@ void  patrones(int **matriz){
     imprimir(matriz);
 }
 
-
+//falta
 
