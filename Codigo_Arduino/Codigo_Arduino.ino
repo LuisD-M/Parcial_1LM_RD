@@ -2,6 +2,7 @@ int pinData  = 2;
 int pinLatch = 3;
 int pinClock = 4;
 
+
 void setup(){
   Serial.begin(9600);
   pinMode(pinData, OUTPUT);
@@ -227,26 +228,31 @@ void  patrones(int **matriz, long tiempo){
 
   patron1(matriz);
   vector2sum(matriz, tiempo);
+  H595(0,0);
 
   patron2(matriz);
   vector2sum(matriz, tiempo);
+  H595(0,0);
+
 
   patron3(matriz);
   vector2sum(matriz, tiempo);
-
+  H595(0,0);
+ 
 
   patron4(matriz);
   vector2sum(matriz, tiempo);
+  H595(0,0);
 
-  H595(0, 0);
 }
-
 
 void vector2sum(int **matriz, long tiempo){
   byte sumRow=0;
   byte potencias[8]={1,2,4,8,16,32,64,128};
-  for (int t = 0; t < tiempo*10; t++){
-      for(int i=0; i<8; i++){
+  unsigned long Tactual = millis();
+  
+  while(millis()-Tactual <= tiempo){
+  	  for(int i=0; i<8; i++){
           for(int j=0; j<8; j++){
               sumRow += matriz[i][j]*potencias[j];
           }
@@ -259,7 +265,7 @@ void vector2sum(int **matriz, long tiempo){
 
 void H595(byte an, byte cat ){
    shiftOut(pinData, pinClock, MSBFIRST, (byte)an);
-   shiftOut(pinData, pinClock, MSBFIRST, (byte)cat);  
+   shiftOut(pinData, pinClock, MSBFIRST, (byte)cat);
    digitalWrite(pinLatch, HIGH);
    digitalWrite(pinLatch, LOW);
 }
